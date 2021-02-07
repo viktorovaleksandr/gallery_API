@@ -8,10 +8,32 @@ function renderAlbums(todoTitle,id) {
 	list.textContent = todoTitle;
 	ulTodo.append(list);
 }
+function eventClickAlbum(todo) {
+	const ulTodo = document.querySelector('.js-list-todo');
+
+  	ulTodo.addEventListener('click', (event) => {
+		const album = event.target.closest('li');
+		const albumId = album.dataset.id;
+		// img.remove();
+		getNewFetch(albumId);
+	});	
+}
+eventClickAlbum()
+
+function getNewFetch(albumId) {
+	fetch(`https://jsonplaceholder.typicode.com/photos?albumId=${albumId}`)
+	.then((response) => response.json())
+	.then((todos) => {
+		todos.map((todo,i) => {
+			console.log(todo)
+			renderPhoto(todo,i);
+   	});
+	})
+}
 function renderPhoto(todo,i) {
 	const div = document.querySelector('.col-md-4');
 	const img = document.createElement('img');
-	
+
 	if (i === 1) {
 		img.src = todo.url;
    	img.width = 550;
@@ -19,27 +41,6 @@ function renderPhoto(todo,i) {
    	div.append(img);
 	}	
 }
-function eventClickAlbum(todo) {
-	const ulTodo = document.querySelector('.js-list-todo');
-  	ulTodo.addEventListener('click', (event) => {
-		const album = event.target.closest('li');
-		const albumId = album.dataset.id;
-		
-		getNewFetch(albumId);
-	});	
-}
-
-function getNewFetch(albumId) {
-	fetch(`https://jsonplaceholder.typicode.com/photos?albumId=${albumId}`)
-	.then((response) => response.json())
-	.then((todos) => {
-		todos.map((todo,i) => {
-			console.log(todo,i);
-			renderPhoto(todo,i);
-   	});
-	})
-}
-
 fetch('https://jsonplaceholder.typicode.com/albums')
 
 	.then((response) => response.json())
@@ -53,8 +54,8 @@ fetch('https://jsonplaceholder.typicode.com/albums')
 	.then((todos) => {
 		todos.map((todo,i) => {
 			renderPhoto(todo,i);
-   		eventClickAlbum(todo);
    	});
 	})
 	.catch((error) => console.log('Error'));
 
+// 1) удолять предыдущее фото
