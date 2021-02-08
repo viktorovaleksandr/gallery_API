@@ -4,3 +4,6 @@ body {
 ul div {
 	cursor: pointer;
 }
+ul div:hover {
+	opacity: 0.7;
+}
