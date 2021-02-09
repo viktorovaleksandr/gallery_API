@@ -5,11 +5,9 @@ const wrapper = document.querySelector('.js-gallery-photo');
 function sendGetPhotosRequest(albumId) {
 	fetch(`https://jsonplaceholder.typicode.com/photos?albumId=${albumId}`)
 	.then((response) => response.json())
-	.then((todos) => {
+	.then((albums) => {
 		wrapper.innerHTML = '';		
-		todos.map((photo) => {
-			renderPhotos(photo);
-   	});
+		renderPhotos(albums);
 	})
 	.catch((error) => console.error('Ошибка:', error));
 }
@@ -29,9 +27,7 @@ function sendGetPhotoRequest() {
 	return fetch('https://jsonplaceholder.typicode.com/photos?albumId=1')
 		.then((response) => response.json())
 		.then((albums) => {
-		albums.map((albumItem) => {
-			renderPhotos(albumItem);
-   	});
+		renderPhotos(albums);
 	})
 	.catch((error) => console.error('Ошибка:', error));
 }
@@ -45,12 +41,10 @@ function renderAlbums(title,id) {
 	albumLists.textContent = title;
 	ulTodo.append(albumLists);
 }
-function renderPhotos(photo) {
-	const img = document.createElement('img');
-	img.src = photo.url;
-  	img.width = 550;
-  	img.height = 150;
-  	wrapper.append(img);
+function renderPhotos(albums) {
+	albums.map((photo) => {
+   	createImgElement(photo);	
+   });
 }
 
 // Event Listener
@@ -63,3 +57,12 @@ function onClickAlbumsItem() {
 	});	
 }
 onClickAlbumsItem();
+
+// Create DOM Element
+function createImgElement(photo) {
+	const img = document.createElement('img');
+	img.src = photo.url;
+  	img.width = 550;
+  	img.height = 150;
+  	wrapper.append(img);
+}
