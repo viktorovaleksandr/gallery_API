@@ -3,8 +3,8 @@ class GalleryRequests {
 		return fetch('https://jsonplaceholder.typicode.com/albums').then((response) => response.json())
 			
 			.then((albums) => {
-			albums.map((albumList,id) => {
-	   		getAlbums(albumList,id);	
+				albums.map((albumList,id) => {
+	   			getAlbums(albumList,id);	
 	   	});
 		})
 	}
@@ -13,8 +13,8 @@ class GalleryRequests {
 		return fetch('https://jsonplaceholder.typicode.com/photos?albumId=1').then((response) => response.json())
 			
 			.then((albums) => {
-			renderPhotos(albums);
-			return  getPhotos(event);
+				renderPhotos(albums);
+			return getPhotos();
 		})
 	}
 
@@ -24,11 +24,11 @@ class GalleryRequests {
 }
 
 function getAlbums(albumList,albumId) {
-	const albumElement = document.createElement('div');
-	albumElement.className = `alert alert-warning`;
-	albumElement.dataset.id = albumId + 1;
-	albumElement.textContent = albumList.title;
-	containerAlbums.append(albumElement);
+	const divElement = document.createElement('div');
+	divElement.className = `alert alert-warning`;
+	divElement.dataset.id = albumId + 1;
+	divElement.textContent = albumList.title;
+	containerGalleryAlbums.append(divElement);
 }
 
 function getPhotos(event) {
@@ -38,7 +38,7 @@ function getPhotos(event) {
 	const promise = GalleryRequests.sendGetPhotosRequest(albumId);
 
 	promise.then((albums) => {
-		containerPhotos.innerHTML = '';		
+		containerGalleryPhotos.innerHTML = '';		
 		renderPhotos(albums);
 	})
 }
@@ -49,8 +49,8 @@ function renderPhotos(albums) {
    });
 }
 
-const containerAlbums = document.querySelector('.js-list-albums');
-const containerPhotos = document.querySelector('.js-gallery-photo');
+const containerGalleryAlbums = document.querySelector('.js-gallery-albums');
+const containerGalleryPhotos = document.querySelector('.js-gallery-photo');
 
 init();
 
@@ -61,7 +61,7 @@ function	init() {
 }
 
 function createPhotosListener() {
-  	containerAlbums.addEventListener('click', (event) => {
+  	containerGalleryAlbums.addEventListener('click', (event) => {
 		getPhotos(event);
 	});	
 }
@@ -71,7 +71,7 @@ function createImage(image) {
 	img.src = image.url;
   	img.width = 550;
   	img.height = 150;
-  	containerPhotos.append(img);
+  	containerGalleryPhotos.append(img);
 }
 
 
