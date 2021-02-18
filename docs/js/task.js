@@ -6,16 +6,16 @@ const containerGalleryPhotos = document.querySelector('.js-gallery-photo');
 function sendGetAlbumsRequest() {
 	return fetch('https://jsonplaceholder.typicode.com/albums').then((response) => response.json())
 		.then((albums) => {
-			renderAlbums(albums);
-	   	sendGetPhotosRequest(albums[0].id);
+		renderAlbums(albums);
+	   sendGetPhotosRequest(albums[0].id);
 	})
 }
 
 function sendGetPhotosRequest(albumId) {
 	return fetch(`https://jsonplaceholder.typicode.com/photos?albumId=${albumId}`).then((response) => response.json())
 	.then((photos) => {
-		containerGalleryPhotos.innerHTML = '';		
-		renderPhotos(photos);
+	containerGalleryPhotos.innerHTML = '';		
+	renderPhotos(photos);
 	})
 }
 
@@ -33,11 +33,11 @@ function renderAlbums(albums) {
 
 function renderPhotos(photos) {
 	photos.map((photo) => {
-   	const img = document.createElement('img');
-		img.src = photo.url;
-  		img.width = 550;
-  		img.height = 150;
-  		containerGalleryPhotos.append(img);	
+   	const imgElement = document.createElement('img');
+		imgElement.src = photo.url;
+  		imgElement.width = 550;
+  		imgElement.height = 150;
+  		containerGalleryPhotos.append(imgElement);	
    });
 }
 
@@ -53,9 +53,8 @@ function createPhotosEventListener() {
 
 // INIT 
 
-init();
-
 function	init() {
 	sendGetAlbumsRequest();
 	createPhotosEventListener();
 }
+init();
