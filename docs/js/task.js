@@ -13,9 +13,9 @@ function sendGetAlbumsRequest() {
 
 function sendGetPhotosRequest(albumId) {
 	return fetch(`https://jsonplaceholder.typicode.com/photos?albumId=${albumId}`).then((response) => response.json())
-	.then((albums) => {
+	.then((photos) => {
 		containerGalleryPhotos.innerHTML = '';		
-		renderPhotos(albums);
+		renderPhotos(photos);
 	})
 }
 
@@ -31,10 +31,10 @@ function renderAlbums(albums) {
 	});
 }
 
-function renderPhotos(albums) {
-	albums.map((image) => {
+function renderPhotos(photos) {
+	photos.map((photo) => {
    	const img = document.createElement('img');
-		img.src = image.url;
+		img.src = photo.url;
   		img.width = 550;
   		img.height = 150;
   		containerGalleryPhotos.append(img);	
